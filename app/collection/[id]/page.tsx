@@ -33,8 +33,7 @@ export default async function Page({
             <Link href={`/collection/${id}/video/${video.slug}`}>
               <div className="relative">
                 <Image
-                  // src={collection.image ?? "/placeholder.jpg"}
-                  src={`http://localhost:8080/cdn/${video.vaultName}/${video.collectionName}/${video.slug}/backdrop.jpg`}
+                  src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/${video.collectionName}/${video.slug}/backdrop.jpg`}
                   alt={video.title}
                   width={1333}
                   height={2000}
