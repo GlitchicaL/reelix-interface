@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Carter_One, Kumbh_Sans } from "next/font/google";
 import "./globals.css";
 
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const carterOne = Carter_One({
   variable: "--font-carter-one",
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${carterOne.variable} ${kumbh_sans.variable} antialiased`}
+        className={`${carterOne.variable} ${kumbh_sans.variable} antialiased overflow-x-hidden`}
       >
         <div className="container max-w-screen-xl mx-auto px-4">
           <Header />
