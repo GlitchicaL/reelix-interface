@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <main>
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-kumbh font-bold text-center text-white pb-12">
+        <h1 className="text-4xl font-kumbh font-bold text-white py-12">
           Welcome To Reelix!
         </h1>
 

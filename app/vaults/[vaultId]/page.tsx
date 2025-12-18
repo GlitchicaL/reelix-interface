@@ -1,4 +1,5 @@
 import { CollectionCard } from "@/components/cards";
+import Navigation from "@/components/Navigation";
 import { Collection } from "@/lib/types";
 
 export default async function Page({
@@ -12,10 +13,8 @@ export default async function Page({
 
   return (
     <main>
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-kumbh font-bold text-white pb-4">
-          {collections.length > 0 ? `${collections[0].vaultName} Videos` : "No Videos"}
-        </h1>
+      <div className="max-w-7xl">
+        <Navigation vaultId={vaultId} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {collections.length > 0 && collections.map((collection: Collection) => (

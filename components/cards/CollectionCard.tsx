@@ -6,14 +6,15 @@ import { Collection } from "@/lib/types";
 
 interface CollectionCardProps {
   vaultId: number,
-  collection: Collection
+  collection: Collection,
 }
 
 function CollectionCard({ vaultId, collection }: CollectionCardProps) {
   return (
     <motion.div
-      className="rounded-lg shadow-md hover:shadow-xl transition-shadow"
+      className="rounded-lg transition-shadow"
       whileHover={{ scale: 1.1, zIndex: 100 }}
+      whileTap={{ scale: 1 }}
       transition={{
         type: "spring",
         stiffness: 200,
@@ -22,13 +23,13 @@ function CollectionCard({ vaultId, collection }: CollectionCardProps) {
       <Link href={`/vaults/${vaultId}/collections/${collection.collectionId}`}>
         <div className="relative">
           <Image
-            src={`http://localhost:8080/cdn/Vaults/${collection.vaultName}/${collection.collectionName}/cover.jpg`}
+            src={`http://localhost:8080/cdn/Vaults/${collection.vaultName}/Videos/${collection.collectionName}/cover.jpg`}
             alt={collection.collectionName}
             width={1333}
             height={2000}
             className="w-full h-102 object-cover rounded-md opacity-60 hover:opacity-100"
           />
-          <p className="bg-card-500/60 absolute bottom-0 w-full p-4 text-2xl text-center font-bold pointer-events-none">{collection.collectionName}</p>
+          <p className="bg-linear-to-t from-card-500 to-card-500/0 absolute bottom-0 w-full p-4 text-2xl text-center font-bold pointer-events-none">{collection.collectionName}</p>
         </div>
       </Link>
     </motion.div>

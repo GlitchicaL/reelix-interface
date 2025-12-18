@@ -16,16 +16,16 @@ export default async function Page({
   return (
     <div className="grid xl:grid-cols-[3fr_1fr]">
       <main className="overflow-hidden">
-        <section className="flex flex-col gap-[32px] pb-6">
+        <section className="flex flex-col gap-[32px] pt-12 pb-6">
           {/* Preload & Autoplay? */}
           <video
             width="100%"
             height="auto"
             controls
-            poster={`http://localhost:8080/cdn/Vaults/${video.vaultName}/${video.collectionName}/${video.slug}/backdrop.jpg`}
+            poster={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
             className="aspect-video object-cover cursor-pointer rounded-3xl"
           >
-            <source src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/${video.collectionName}/${video.slug}/${video.slug}.mp4`} type="video/mp4" />
+            <source src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/${video.slug}.mp4`} type="video/mp4" />
             Video tag not supported.
           </video>
         </section>
@@ -65,7 +65,7 @@ export default async function Page({
       </main>
 
       {videos && (
-        <aside className="mt-4 xl:mt-0 xl:pl-8">
+        <aside className="pt-12 xl:mt-0 xl:pl-8">
           <h2 className="text-2xl font-kumbh font-bold pb-4">Related Videos</h2>
           {videos.map((video: Video) => (
             <VideoCard key={video.title} vaultId={vaultId} collectionId={collectionId} video={video} />

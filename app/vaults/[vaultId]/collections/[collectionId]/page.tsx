@@ -13,7 +13,7 @@ export default async function Page({
 
   return (
     <main>
-      <h1 className="text-4xl font-kumbh font-bold text-center text-white mb-12">
+      <h1 className="text-4xl font-kumbh font-bold text-white py-12">
         {videos && videos[0].collectionName}
       </h1>
 
