@@ -8,7 +8,7 @@ export default async function Page({
 }) {
   const { vaultId, collectionId } = await params;
 
-  const response = await fetch(`http://localhost:8081/api/videos/${vaultId}/${collectionId}`);
+  const response = await fetch(`http://localhost:8081/api/videos/${collectionId}`);
   const videos = await response.json();
 
   return (
@@ -18,8 +18,8 @@ export default async function Page({
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {videos && videos.map((video: Video) => (
-          <VideoCard key={video.title} vaultId={vaultId} collectionId={collectionId} video={video} />
+        {videos && videos.map((video: Video, index: number) => (
+          <VideoCard key={index} vaultId={vaultId} collectionId={collectionId} video={video} />
         ))}
       </div>
     </main>

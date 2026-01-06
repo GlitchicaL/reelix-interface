@@ -18,7 +18,7 @@ export default async function Page({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {collections.length > 0 && collections.map((collection: Collection) => (
-            <CollectionCard key={collection.collectionId} vaultId={vaultId} collection={collection} />
+            <CollectionCard key={collection.id} vaultId={vaultId} collection={collection} />
           ))}
         </div>
       </div>

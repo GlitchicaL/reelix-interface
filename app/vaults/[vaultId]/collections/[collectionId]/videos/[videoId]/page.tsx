@@ -1,4 +1,5 @@
-import { ActorCard, VideoCard } from "@/components/cards";
+import { VideoCard } from "@/components/cards";
+import Picture from "@/components/Picture";
 import { Video, Actor } from "@/lib/types";
 
 export default async function Page({
@@ -8,13 +9,21 @@ export default async function Page({
 }) {
   const { vaultId, collectionId, videoId } = await params;
 
-  const response = await fetch(`http://localhost:8081/api/video/${vaultId}/${collectionId}/${videoId}`);
+  const response = await fetch(`http://localhost:8081/api/video/${videoId}`);
   const video = await response.json();
 
   const videos: Video[] = [];
 
   return (
     <div className="grid xl:grid-cols-[3fr_1fr]">
+      <div className="fixed -z-50 inset-0 overflow-hidden">
+        <img
+          src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/cover.jpg`}
+          alt=""
+          className="h-full w-full object-cover object-center opacity-20"
+        />
+      </div>
+
       <main className="overflow-hidden">
         <section className="flex flex-col gap-[32px] pt-12 pb-6">
           {/* Preload & Autoplay? */}
@@ -57,7 +66,14 @@ export default async function Page({
 
             <div className="flex gap-6 flex-nowrap w-full overflow-x-auto overflow-y-hidden">
               {video.actors.map((actor: Actor) => (
-                <ActorCard key={actor.name} vaultName={video.vaultName} actor={actor} />
+                <Picture
+                  key={actor.slug}
+                  src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Pictures/actors/${actor.slug}.jpg`}
+                  alt={actor.name}
+                  caption={actor.name}
+                  width={300}
+                  height={450}
+                />
               ))}
             </div>
           </section>
@@ -67,9 +83,18 @@ export default async function Page({
       {videos && (
         <aside className="pt-12 xl:mt-0 xl:pl-8">
           <h2 className="text-2xl font-kumbh font-bold pb-4">Related Videos</h2>
-          {videos.map((video: Video) => (
-            <VideoCard key={video.title} vaultId={vaultId} collectionId={collectionId} video={video} />
-          ))}
+          <div className="flex flex-col gap-4">
+            {videos.map((video: Video) => (
+              <VideoCard
+                key={video.title}
+                vaultId={vaultId}
+                collectionId={collectionId}
+                video={video}
+                height={50}
+                font="font-xl"
+              />
+            ))}
+          </div>
         </aside>
       )}
     </div>

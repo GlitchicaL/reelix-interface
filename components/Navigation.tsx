@@ -12,7 +12,7 @@ interface NavigationProps {
 
 const URLS = [
   { text: "Collections", base: "/vaults" },
-  { text: "Gallery", base: "/gallery" },
+  { text: "Galleries", base: "/galleries" },
   { text: "Latest Videos", base: "/videos" },
   { text: "Favorites", base: "/favorites" },
 ]

@@ -1,4 +1,4 @@
 export interface Vault {
-  vaultId: number,
-  vaultName: string,
+  id: number,
+  name: string,
 }

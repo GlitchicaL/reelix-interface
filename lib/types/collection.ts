@@ -1,5 +1,5 @@
 export interface Collection {
-  collectionId: number,
-  collectionName: string,
+  id: number,
+  name: string,
   vaultName: string,
 }

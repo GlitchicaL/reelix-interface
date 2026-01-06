@@ -17,20 +17,20 @@ export default async function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {vaults.map((vault: Vault) => (
             <div
-              key={vault.vaultId}
+              key={vault.id}
               className="bg-card-500 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow justify-items-center"
             >
-              <Link href={`/vaults/${vault.vaultId}`}>
+              <Link href={`/vaults/${vault.id}`}>
                 <div className="relative">
                   <Image
-                    src={`http://localhost:8080/cdn/Vaults/${vault.vaultName}/cover.jpg`}
-                    alt={vault.vaultName}
+                    src={`http://localhost:8080/cdn/Vaults/${vault.name}/cover.jpg`}
+                    alt={vault.name}
                     width={1333}
                     height={2000}
                     className="w-full h-102 object-cover rounded-md"
                   />
                   <div className="absolute inset-0 bg-black opacity-60 hover:opacity-30 rounded-md"></div>
-                  <p className="absolute inset-0 top-[50%] text-white text-center font-kumbh text-3xl font-bold pointer-events-none">{vault.vaultName}</p>
+                  <p className="absolute inset-0 top-[50%] text-white text-center font-kumbh text-3xl font-bold pointer-events-none">{vault.name}</p>
                 </div>
               </Link>
             </div>
