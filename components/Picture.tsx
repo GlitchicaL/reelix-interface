@@ -10,9 +10,10 @@ interface PictureProps {
   caption?: string | null,
   width?: number,
   height?: number,
+  style?: string,
 }
 
-function Picture({ src, alt, caption = null, width = 1333, height = 2000 }: PictureProps) {
+function Picture({ src, alt, caption = null, width = 1333, height = 2000, style }: PictureProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -35,12 +36,14 @@ function Picture({ src, alt, caption = null, width = 1333, height = 2000 }: Pict
             alt={alt}
             width={width}
             height={height}
-            className={`max-w-[${width}px] max-h-[${height}px] object-cover rounded-md opacity-80 -z-10 hover:opacity-100 hover:z-10`}
+            className={`${style} object-cover rounded-md opacity-80 -z-10 hover:opacity-100 hover:z-10`}
             loading="eager"
           />
         </motion.div>
 
-        <p className="bg-linear-to-t from-card-500 to-card-500/0 absolute bottom-0 w-full p-4 text-2xl text-center font-bold pointer-events-none">{caption}</p>
+        {caption && (
+          <p className="bg-linear-to-t from-card-500 to-card-500/0 absolute bottom-0 w-full p-4 text-2xl text-center font-bold pointer-events-none">{caption}</p>
+        )}
 
         <AnimatePresence>
           {isOpen && (

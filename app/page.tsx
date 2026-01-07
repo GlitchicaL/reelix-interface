@@ -20,7 +20,7 @@ export default async function Home() {
               key={vault.id}
               className="bg-card-500 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow justify-items-center"
             >
-              <Link href={`/vaults/${vault.id}`}>
+              <Link href={`/collections/${vault.id}`}>
                 <div className="relative">
                   <Image
                     src={`http://localhost:8080/cdn/Vaults/${vault.name}/cover.jpg`}

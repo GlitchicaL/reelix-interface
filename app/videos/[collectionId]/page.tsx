@@ -1,4 +1,5 @@
-import { VideoCard } from "@/components/cards";
+import Card from "@/components/Card";
+
 import { Video } from "@/lib/types";
 
 export default async function Page({
@@ -19,7 +20,13 @@ export default async function Page({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {videos && videos.map((video: Video, index: number) => (
-          <VideoCard key={index} vaultId={vaultId} collectionId={collectionId} video={video} />
+          <Card
+            key={video.id}
+            href={`/video/${video.id}`}
+            src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
+            alt={video.title}
+            title={video.title}
+          />
         ))}
       </div>
     </main>

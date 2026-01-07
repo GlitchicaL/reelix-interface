@@ -1,5 +1,6 @@
-import { VideoCard } from "@/components/cards";
 import Picture from "@/components/Picture";
+import Card from "@/components/Card";
+
 import { Video, Actor } from "@/lib/types";
 
 export default async function Page({
@@ -71,8 +72,7 @@ export default async function Page({
                   src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Pictures/actors/${actor.slug}.jpg`}
                   alt={actor.name}
                   caption={actor.name}
-                  width={300}
-                  height={450}
+                  style={"max-w-[300px] max-h-[400px]"}
                 />
               ))}
             </div>
@@ -85,13 +85,12 @@ export default async function Page({
           <h2 className="text-2xl font-kumbh font-bold pb-4">Related Videos</h2>
           <div className="flex flex-col gap-4">
             {videos.map((video: Video) => (
-              <VideoCard
-                key={video.title}
-                vaultId={vaultId}
-                collectionId={collectionId}
-                video={video}
-                height={50}
-                font="font-xl"
+              <Card
+                key={video.id}
+                href={`/video/${video.id}`}
+                src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
+                alt={video.title}
+                title={video.title}
               />
             ))}
           </div>
