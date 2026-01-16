@@ -26,6 +26,7 @@ async function Page({
             key={index}
             src={`http://localhost:8080/cdn/Vaults/${gallery.vaultName}/Pictures/${gallery.slug}/${getFullIndex(index + 1)}.jpg`}
             alt={`${gallery.slug}_${getFullIndex(index + 1)}.jpg`}
+            style={""}
           />
         ))}
       </div>

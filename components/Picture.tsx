@@ -13,7 +13,7 @@ interface PictureProps {
   style?: string,
 }
 
-function Picture({ src, alt, caption = null, width = 1333, height = 2000, style }: PictureProps) {
+function Picture({ src, alt, caption = null, width = 1333, height = 2000, style = "h-102" }: PictureProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

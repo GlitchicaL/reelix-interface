@@ -7,11 +7,13 @@ interface CardProps {
   src: string,
   alt: string,
   title: string,
+  width?: number,
   height?: number,
   font?: string,
+  style?: string,
 }
 
-function Card({ href, src, alt, title, height = 80, font = "text-2xl" }: CardProps) {
+function Card({ href, src, alt, title, width = 1920, height = 1080, font = "text-2xl", style = "h-60" }: CardProps) {
   return (
     <motion.div
       className="rounded-lg transition-shadow"
@@ -27,11 +29,11 @@ function Card({ href, src, alt, title, height = 80, font = "text-2xl" }: CardPro
           <Image
             src={src}
             alt={alt}
-            width={1920}
-            height={1080}
-            className={`w-full h-${height} object-cover rounded-md opacity-60 hover:opacity-100`}
+            width={width}
+            height={height}
+            className={`${style} w-full object-cover rounded-md opacity-60 hover:opacity-100`}
           />
-          <p className={`bg-linear-to-t from-card-500 to-card-500/0 absolute bottom-0 w-full p-2 text-center font-bold pointer-events-none ${font}`}>{title}</p>
+          <p className={`${font} bg-linear-to-t from-card-500 to-card-500/0 absolute bottom-0 w-full p-2 text-center font-bold pointer-events-none`}>{title}</p>
         </div>
       </Link>
     </motion.div>

@@ -31,7 +31,7 @@ async function Page({
             src={`http://localhost:8080/cdn/Vaults/${vaultName}/Pictures/actors/${actors[actors.length - 1].slug}.jpg`}
             alt={`actor`}
             title={`Actors`}
-            height={102}
+            style={"h-102"}
           />
         )}
 
@@ -42,7 +42,7 @@ async function Page({
             src={`http://localhost:8080/cdn/Vaults/${gallery.vaultName}/Pictures/${gallery.slug}/${getFullIndex(gallery.imageCount)}.jpg`}
             alt={gallery.slug}
             title={gallery.title}
-            height={102}
+            style={"h-102"}
           />
         ))}
       </div>

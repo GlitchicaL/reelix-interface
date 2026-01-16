@@ -80,7 +80,7 @@ export default async function Page({
         )}
       </main>
 
-      {videos && (
+      {videos.length > 0 && (
         <aside className="pt-12 xl:mt-0 xl:pl-8">
           <h2 className="text-2xl font-kumbh font-bold pb-4">Related Videos</h2>
           <div className="flex flex-col gap-4">

@@ -18,14 +18,14 @@ export default async function Page({
         <Navigation vaultId={vaultId} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {collections.length > 0 && collections.map((collection: Collection) => (
+          {collections && collections.map((collection: Collection) => (
             <Card
               key={collection.id}
               href={`/videos/${collection.id}`}
               src={`http://localhost:8080/cdn/Vaults/${collection.vaultName}/Videos/${collection.name}/cover.jpg`}
               alt={collection.name}
               title={collection.name}
-              height={102}
+              style={"h-102"}
             />
           ))}
         </div>

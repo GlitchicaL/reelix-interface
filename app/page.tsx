@@ -7,6 +7,8 @@ export default async function Home() {
   const response = await fetch("http://localhost:8081/api/vaults");
   const vaults = await response.json();
 
+  console.log(vaults)
+
   return (
     <main>
       <div className="max-w-7xl mx-auto">
@@ -15,7 +17,7 @@ export default async function Home() {
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {vaults.map((vault: Vault) => (
+          {vaults && vaults.map((vault: Vault) => (
             <div
               key={vault.id}
               className="bg-card-500 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow justify-items-center"
