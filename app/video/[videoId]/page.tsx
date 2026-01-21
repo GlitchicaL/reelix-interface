@@ -1,16 +1,21 @@
+import { cookies } from "next/headers";
+
 import Picture from "@/components/Picture";
 import Card from "@/components/Card";
 
 import { Video, Actor } from "@/lib/types";
+import { API_PORT, CDN_PORT } from "@/lib/constants";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ vaultId: number, collectionId: number, videoId: number }>
 }) {
+  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value;
+
   const { vaultId, collectionId, videoId } = await params;
 
-  const response = await fetch(`http://localhost:8081/api/video/${videoId}`);
+  const response = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/video/${videoId}`);
   const video = await response.json();
 
   const videos: Video[] = [];
@@ -19,7 +24,7 @@ export default async function Page({
     <div className="grid xl:grid-cols-[3fr_1fr]">
       <div className="fixed -z-50 inset-0 overflow-hidden">
         <img
-          src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/cover.jpg`}
+          src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/cover.jpg`}
           alt=""
           className="h-full w-full object-cover object-center opacity-20"
         />
@@ -32,10 +37,10 @@ export default async function Page({
             width="100%"
             height="auto"
             controls
-            poster={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
+            poster={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
             className="aspect-video object-cover cursor-pointer rounded-3xl"
           >
-            <source src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/${video.slug}.mp4`} type="video/mp4" />
+            <source src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/${video.slug}.mp4`} type="video/mp4" />
             Video tag not supported.
           </video>
         </section>
@@ -69,7 +74,7 @@ export default async function Page({
               {video.actors.map((actor: Actor) => (
                 <Picture
                   key={actor.slug}
-                  src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Pictures/actors/${actor.slug}.jpg`}
+                  src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Pictures/actors/${actor.slug}.jpg`}
                   alt={actor.name}
                   caption={actor.name}
                   style={"max-w-[300px] max-h-[400px]"}
@@ -88,7 +93,7 @@ export default async function Page({
               <Card
                 key={video.id}
                 href={`/video/${video.id}`}
-                src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
+                src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
                 alt={video.title}
                 title={video.title}
               />

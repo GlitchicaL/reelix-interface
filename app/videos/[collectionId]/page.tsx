@@ -1,15 +1,20 @@
+import { cookies } from "next/headers";
+
 import Card from "@/components/Card";
 
 import { Video } from "@/lib/types";
+import { API_PORT, CDN_PORT } from "@/lib/constants";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ vaultId: number, collectionId: number }>
 }) {
+  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value;
+
   const { vaultId, collectionId } = await params;
 
-  const response = await fetch(`http://localhost:8081/api/videos/${collectionId}`);
+  const response = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/videos/${collectionId}`);
   const videos = await response.json();
 
   return (
@@ -23,7 +28,7 @@ export default async function Page({
           <Card
             key={video.id}
             href={`/video/${video.id}`}
-            src={`http://localhost:8080/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
+            src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
             alt={video.title}
             title={video.title}
           />

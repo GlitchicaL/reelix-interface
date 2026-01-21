@@ -1,13 +1,15 @@
+import { cookies } from 'next/headers';
 import Image from "next/image";
 import Link from "next/link";
 
 import { Vault } from "@/lib/types";
+import { API_PORT, CDN_PORT } from "@/lib/constants";
 
 export default async function Home() {
-  const response = await fetch("http://localhost:8081/api/vaults");
-  const vaults = await response.json();
+  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value;
 
-  console.log(vaults)
+  const response = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/vaults`);
+  const vaults = await response.json();
 
   return (
     <main>
@@ -25,7 +27,7 @@ export default async function Home() {
               <Link href={`/collections/${vault.id}`}>
                 <div className="relative">
                   <Image
-                    src={`http://localhost:8080/cdn/Vaults/${vault.name}/cover.jpg`}
+                    src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${vault.name}/cover.jpg`}
                     alt={vault.name}
                     width={1333}
                     height={2000}
