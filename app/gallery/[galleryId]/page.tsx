@@ -3,15 +3,15 @@ import { cookies } from 'next/headers';
 import Picture from "@/components/Picture";
 
 import { Gallery } from "@/lib/types";
-import { getFullIndex } from "@/lib/utils";
 import { API_PORT, CDN_PORT } from '@/lib/constants';
+import { buildGalleryUrl } from '@/lib/utils';
 
 async function Page({
   params,
 }: {
   params: Promise<{ galleryId: number }>
 }) {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value;
+  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value ?? "";
 
   const { galleryId } = await params;
 
@@ -29,8 +29,8 @@ async function Page({
         {Array.from({ length: gallery.imageCount }).map((_, index) => (
           <Picture
             key={index}
-            src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${gallery.vaultName}/Pictures/${gallery.slug}/${getFullIndex(index + 1)}.jpg`}
-            alt={`${gallery.slug}_${getFullIndex(index + 1)}.jpg`}
+            src={buildGalleryUrl(BASE_SERVER_URL, CDN_PORT, gallery.vaultName, gallery.slug, index + 1)}
+            alt={`${gallery.slug}_${index + 1}.jpg`}
             style={""}
           />
         ))}

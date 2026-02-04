@@ -22,7 +22,7 @@ function Picture({ src, alt, caption = null, width = 1333, height = 2000, style 
     >
       <div className="overflow-hidden rounded-lg">
         <motion.div
-          className="rounded-lg transition-shadow cursor-pointer"
+          className="bg-card-500 rounded-lg transition-shadow cursor-pointer"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 1 }}
           transition={{

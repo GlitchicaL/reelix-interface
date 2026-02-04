@@ -4,13 +4,15 @@ import Picture from "@/components/Picture";
 
 import { Actor, Vault } from "@/lib/types";
 import { API_PORT, CDN_PORT } from "@/lib/constants";
+import { buildActorUrl } from "@/lib/utils";
+
 
 async function Page({
   params,
 }: {
-  params: Promise<{ vaultId: number, galleryId: number }>
+  params: Promise<{ vaultId: number }>
 }) {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value;
+  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value ?? "";
 
   const { vaultId } = await params;
   const actorsResponse = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/actors/${vaultId}`);
@@ -29,7 +31,7 @@ async function Page({
         {actors.map((actor: Actor) => (
           <Picture
             key={actor.slug}
-            src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${vault.name}/Pictures/actors/${actor.slug}.jpg`}
+            src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, vault.name, actor.slug)}
             alt={actor.name}
             caption={actor.name}
             width={300}

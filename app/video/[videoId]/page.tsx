@@ -2,18 +2,20 @@ import { cookies } from "next/headers";
 
 import Picture from "@/components/Picture";
 import Card from "@/components/Card";
+import Backdrop from "@/components/Backdrop";
 
 import { Video, Actor } from "@/lib/types";
 import { API_PORT, CDN_PORT } from "@/lib/constants";
+import { buildThumbnailUrl, buildActorUrl, buildVideoUrl } from "@/lib/utils";
 
 export default async function Page({
   params,
 }: {
-  params: Promise<{ vaultId: number, collectionId: number, videoId: number }>
+  params: Promise<{ videoId: number }>
 }) {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value;
+  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value ?? "";
 
-  const { vaultId, collectionId, videoId } = await params;
+  const { videoId } = await params;
 
   const response = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/video/${videoId}`);
   const video = await response.json();
@@ -22,25 +24,21 @@ export default async function Page({
 
   return (
     <div className="grid xl:grid-cols-[3fr_1fr]">
-      <div className="fixed -z-50 inset-0 overflow-hidden">
-        <img
-          src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/cover.jpg`}
-          alt=""
-          className="h-full w-full object-cover object-center opacity-20"
-        />
-      </div>
+      <Backdrop
+        serverUrl={BASE_SERVER_URL}
+        video={video}
+      />
 
       <main className="overflow-hidden">
         <section className="flex flex-col gap-[32px] pt-12 pb-6">
-          {/* Preload & Autoplay? */}
           <video
             width="100%"
             height="auto"
             controls
-            poster={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
+            poster={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)}
             className="aspect-video object-cover cursor-pointer rounded-3xl"
           >
-            <source src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/${video.slug}.mp4`} type="video/mp4" />
+            <source src={buildVideoUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)} type="video/mp4" />
             Video tag not supported.
           </video>
         </section>
@@ -74,7 +72,7 @@ export default async function Page({
               {video.actors.map((actor: Actor) => (
                 <Picture
                   key={actor.slug}
-                  src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Pictures/actors/${actor.slug}.jpg`}
+                  src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, actor.slug)}
                   alt={actor.name}
                   caption={actor.name}
                   style={"max-w-[300px] max-h-[400px]"}
@@ -93,7 +91,7 @@ export default async function Page({
               <Card
                 key={video.id}
                 href={`/video/${video.id}`}
-                src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${video.vaultName}/Videos/${video.collectionName}/${video.slug}/backdrop.jpg`}
+                src={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)}
                 alt={video.title}
                 title={video.title}
               />

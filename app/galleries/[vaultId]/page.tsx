@@ -4,15 +4,15 @@ import Navigation from "@/components/Navigation";
 import Card from "@/components/Card";
 
 import { Gallery } from "@/lib/types";
-import { getFullIndex } from "@/lib/utils";
 import { API_PORT, CDN_PORT } from '@/lib/constants';
+import { buildActorUrl, buildGalleryUrl } from '@/lib/utils';
 
 async function Page({
   params,
 }: {
   params: Promise<{ vaultId: number }>
 }) {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value;
+  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value ?? "";
 
   const { vaultId } = await params;
   const galleriesResponse = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/galleries/${vaultId}`);
@@ -29,7 +29,7 @@ async function Page({
         {actors && actors.length > 0 && (
           <Card
             href={`/actors/${vaultId}`}
-            src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${vaultName}/Pictures/actors/${actors[actors.length - 1].slug}.jpg`}
+            src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, vaultName, actors[actors.length - 1].slug)}
             alt={`actor`}
             title={`Actors`}
             style={"h-102"}
@@ -40,7 +40,7 @@ async function Page({
           <Card
             key={gallery.id}
             href={`/gallery/${gallery.id}`}
-            src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${gallery.vaultName}/Pictures/${gallery.slug}/${getFullIndex(gallery.imageCount)}.jpg`}
+            src={buildGalleryUrl(BASE_SERVER_URL, CDN_PORT, gallery.vaultName, gallery.slug, gallery.imageCount)}
             alt={gallery.slug}
             title={gallery.title}
             style={"h-102"}
