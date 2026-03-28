@@ -31,12 +31,6 @@ function Backdrop({ serverUrl, video }: BackdropProps) {
       setBackdrop(backdropUrl);
     }
 
-    // There is a chance that both the thumbnail and backdrop may not
-    // exist, therefore we set null and display no backdrop
-    image.onerror = () => {
-      setBackdrop(null);
-    }
-
     image.src = backdropUrl;
   }, [serverUrl, video.vaultName, video.collectionName, video.slug, CDN_PORT])
 

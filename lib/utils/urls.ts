@@ -1,9 +1,19 @@
 import { getFullIndex } from "../utils";
 
-
 export type AssetType = "cover" | "thumbnail" | "backdrop";
 
-export const BASE_API_PATH = "/api";
+export const BASE_API_PATH = "api";
+export const BASE_CDN_PATH = "cdn/vaults";
+
+/**
+ * Trim the URL for pattern matching (ex. /collection/1 -> /collection/)
+ * @param url The URL to trim
+ * @returns The trimmed URL
+ */
+export function trimUrl(url: string): string {
+  const parts = url.split("/");
+  return `\/${parts[1]}\/`;
+}
 
 export function buildBaseApiServerUrl(
   serverUrl: string,
@@ -13,14 +23,26 @@ export function buildBaseApiServerUrl(
   return `${serverUrl}:${serverPort}/${basePath}`;
 }
 
-export const BASE_CDN_PATH = "/cdn/vaults";
-
 export function buildCdnPath(
   serverUrl: string,
   serverPort: number,
   basePath: string
 ): string {
   return `${serverUrl}:${serverPort}/${basePath}`;
+}
+
+export function buildRegisterUrl(
+  serverUrl: string,
+  serverPort: number,
+) {
+  return `${serverUrl}:${serverPort}/${BASE_API_PATH}/register`;
+}
+
+export function buildLoginUrl(
+  serverUrl: string,
+  serverPort: number,
+) {
+  return `${serverUrl}:${serverPort}/${BASE_API_PATH}/login`;
 }
 
 export function buildCollectionUrl(
