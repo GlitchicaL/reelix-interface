@@ -1,22 +1,22 @@
-import { cookies } from 'next/headers';
+"use client";
+
+import { useParams } from "next/navigation";
+
+import { useCookie, useFetch } from "@/hooks";
 
 import Navigation from "@/components/Navigation";
 import Card from "@/components/Card";
 
 import { Collection } from "@/lib/types";
-import { API_PORT, CDN_PORT } from "@/lib/constants";
+import { CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL } from "@/lib/constants";
 import { buildCollectionUrl } from "@/lib/utils";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ vaultId: number }>
-}) {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value ?? "";
+export default function Page() {
+  const params = useParams();
+  const vaultId = params?.vaultId as string;
 
-  const { vaultId } = await params;
-  const response = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/collections/${vaultId}`);
-  const collections: Collection[] = await response.json();
+  const { value: BASE_SERVER_URL } = useCookie(REELIX_COOKIE_BASE_SERVER_URL);
+  const { data: collections } = useFetch<Collection[]>(`/api/collections/${vaultId}`);
 
   return (
     <main>
@@ -24,7 +24,7 @@ export default async function Page({
         <Navigation vaultId={vaultId} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {collections && collections.map((collection: Collection) => (
+          {collections && BASE_SERVER_URL && collections.map((collection: Collection) => (
             <Card
               key={collection.id}
               href={`/videos/${collection.id}`}

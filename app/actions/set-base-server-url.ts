@@ -18,7 +18,7 @@ export async function setBaseServerURL(ip: string, remember: boolean) {
   const MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
   (await cookies()).set(REELIX_COOKIE_BASE_SERVER_URL, BASE_URL, {
-    httpOnly: true,
+    httpOnly: false,
     path: '/',
     sameSite: 'lax',
     maxAge: remember ? MAX_AGE : undefined,

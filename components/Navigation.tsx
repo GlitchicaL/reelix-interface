@@ -7,7 +7,7 @@ import LinkItem from "./LinkItem";
 import { User } from "./icons";
 
 interface NavigationProps {
-  vaultId: number,
+  vaultId: string,
 }
 
 const URLS = [
@@ -38,14 +38,15 @@ function Navigation({ vaultId }: NavigationProps) {
         })}
       </ul>
 
-      <motion.div
+      <motion.a
+        href="/preferences"
         initial={{ scale: 0.80, zIndex: 100 }}
         whileHover={{ scale: 1, zIndex: 100 }}
         whileTap={{ scale: 0.80 }}
         className="cursor-pointer"
       >
         <User />
-      </motion.div>
+      </motion.a>
     </div>
   );
 }

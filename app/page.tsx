@@ -1,15 +1,15 @@
-import { cookies } from 'next/headers';
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
+import { useCookie, useFetch } from "@/hooks";
 import { Vault } from "@/lib/types";
-import { API_PORT, CDN_PORT } from "@/lib/constants";
+import { CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL } from "@/lib/constants";
 
-export default async function Home() {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value;
-
-  const response = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/vaults`);
-  const vaults = await response.json();
+export default function Home() {
+  const { value: BASE_SERVER_URL } = useCookie(REELIX_COOKIE_BASE_SERVER_URL);
+  const { data: vaults } = useFetch<Vault[]>("/api/vaults");
 
   return (
     <main>

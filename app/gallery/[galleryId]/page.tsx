@@ -1,22 +1,21 @@
-import { cookies } from 'next/headers';
+"use client";
+
+import { useParams } from "next/navigation";
+
+import { useCookie, useFetch } from "@/hooks";
 
 import Picture from "@/components/Picture";
 
 import { Gallery } from "@/lib/types";
-import { API_PORT, CDN_PORT } from '@/lib/constants';
+import { API_PORT, CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL } from '@/lib/constants';
 import { buildGalleryUrl } from '@/lib/utils';
 
-async function Page({
-  params,
-}: {
-  params: Promise<{ galleryId: number }>
-}) {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value ?? "";
+export default function Page() {
+  const params = useParams();
+  const galleryId = params?.galleryId as string;
 
-  const { galleryId } = await params;
-
-  const response = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/gallery/${galleryId}`);
-  const gallery: Gallery = await response.json();
+  const { value: BASE_SERVER_URL } = useCookie(REELIX_COOKIE_BASE_SERVER_URL);
+  const { data: gallery } = useFetch<Gallery>(`/api/gallery/${galleryId}`);
 
   return (
     <main>
@@ -26,7 +25,7 @@ async function Page({
 
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
 
-        {Array.from({ length: gallery.imageCount }).map((_, index) => (
+        {BASE_SERVER_URL && gallery && Array.from({ length: gallery.imageCount }).map((_, index) => (
           <Picture
             key={index}
             src={buildGalleryUrl(BASE_SERVER_URL, CDN_PORT, gallery.vaultName, gallery.slug, index + 1)}
@@ -38,5 +37,3 @@ async function Page({
     </main>
   );
 }
-
-export default Page;

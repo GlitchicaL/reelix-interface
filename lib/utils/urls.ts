@@ -11,6 +11,10 @@ export const BASE_CDN_PATH = "cdn/vaults";
  * @returns The trimmed URL
  */
 export function trimUrl(url: string): string {
+  if (url === "/") {
+    return "/";
+  }
+
   const parts = url.split("/");
   return `\/${parts[1]}\/`;
 }
@@ -29,20 +33,6 @@ export function buildCdnPath(
   basePath: string
 ): string {
   return `${serverUrl}:${serverPort}/${basePath}`;
-}
-
-export function buildRegisterUrl(
-  serverUrl: string,
-  serverPort: number,
-) {
-  return `${serverUrl}:${serverPort}/${BASE_API_PATH}/register`;
-}
-
-export function buildLoginUrl(
-  serverUrl: string,
-  serverPort: number,
-) {
-  return `${serverUrl}:${serverPort}/${BASE_API_PATH}/login`;
 }
 
 export function buildCollectionUrl(

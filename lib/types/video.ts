@@ -4,6 +4,8 @@ export interface Video {
   slug: string,
   vaultName: string,
   collectionName: string,
+  studio: string,
+  tags: string[],
   actors: Actor[],
 }
 

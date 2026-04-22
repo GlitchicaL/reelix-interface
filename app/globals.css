@@ -10,6 +10,7 @@
   --color-foreground: var(--foreground);
 
   --color-card-500: #050a0f;
+  --color-button-500: #009cf8;
 
   --font-carter: var(--font-carter-one);
   --font-kumbh: var(--font-kumbh-sans);

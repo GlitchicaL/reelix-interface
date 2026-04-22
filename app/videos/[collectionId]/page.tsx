@@ -1,22 +1,21 @@
-import { cookies } from "next/headers";
+"use client";
+
+import { useParams } from "next/navigation";
+
+import { useCookie, useFetch } from "@/hooks";
 
 import Card from "@/components/Card";
 
 import { Video } from "@/lib/types";
-import { API_PORT, CDN_PORT } from "@/lib/constants";
+import { CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL } from "@/lib/constants";
 import { buildThumbnailUrl } from "@/lib/utils";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ collectionId: number }>
-}) {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value ?? "";
+export default function Page() {
+  const params = useParams();
+  const collectionId = params?.collectionId as string;
 
-  const { collectionId } = await params;
-
-  const response = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/videos/${collectionId}`);
-  const videos = await response.json();
+  const { value: BASE_SERVER_URL } = useCookie(REELIX_COOKIE_BASE_SERVER_URL);
+  const { data: videos } = useFetch<Video[]>(`/api/videos/${collectionId}`);
 
   return (
     <main>
@@ -25,7 +24,7 @@ export default async function Page({
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {videos && videos.map((video: Video, index: number) => (
+        {videos && BASE_SERVER_URL && videos.map((video: Video, index: number) => (
           <Card
             key={video.id}
             href={`/video/${video.id}`}

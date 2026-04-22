@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { register } from '@/app/actions/auth';
-
 export default function Page() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -16,7 +14,12 @@ export default function Page() {
     e.preventDefault();
 
     try {
-      await register(username, password);
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+        credentials: "include",
+      });
     } catch (error) {
       console.log(error);
       return;

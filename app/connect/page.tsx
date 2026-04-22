@@ -22,7 +22,7 @@ export default function Page() {
       return;
     }
 
-    router.push("/login");
+    router.push("/");
   };
 
   return (

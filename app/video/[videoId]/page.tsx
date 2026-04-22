@@ -1,49 +1,52 @@
-import { cookies } from "next/headers";
+"use client";
+
+import { useParams } from "next/navigation";
+
+import { useCookie, useFetch } from "@/hooks";
 
 import Picture from "@/components/Picture";
 import Card from "@/components/Card";
 import Backdrop from "@/components/Backdrop";
 
 import { Video, Actor } from "@/lib/types";
-import { API_PORT, CDN_PORT } from "@/lib/constants";
+import { CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL } from "@/lib/constants";
 import { buildThumbnailUrl, buildActorUrl, buildVideoUrl } from "@/lib/utils";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ videoId: number }>
-}) {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value ?? "";
+export default function Page() {
+  const params = useParams();
+  const videoId = params?.videoId as string;
 
-  const { videoId } = await params;
-
-  const response = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/video/${videoId}`);
-  const video = await response.json();
+  const { value: BASE_SERVER_URL } = useCookie(REELIX_COOKIE_BASE_SERVER_URL);
+  const { data: video } = useFetch<Video>(`/api/video/${videoId}`);
 
   const videos: Video[] = [];
 
   return (
     <div className="grid xl:grid-cols-[3fr_1fr]">
-      <Backdrop
-        serverUrl={BASE_SERVER_URL}
-        video={video}
-      />
+      {BASE_SERVER_URL && video && (
+        <Backdrop
+          serverUrl={BASE_SERVER_URL}
+          video={video}
+        />
+      )}
 
       <main className="overflow-hidden">
         <section className="flex flex-col gap-[32px] pt-12 pb-6">
-          <video
-            width="100%"
-            height="auto"
-            controls
-            poster={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)}
-            className="aspect-video object-cover cursor-pointer rounded-3xl"
-          >
-            <source src={buildVideoUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)} type="video/mp4" />
-            Video tag not supported.
-          </video>
+          {BASE_SERVER_URL && video && (
+            <video
+              width="100%"
+              height="auto"
+              controls
+              poster={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)}
+              className="aspect-video object-cover cursor-pointer rounded-3xl"
+            >
+              <source src={buildVideoUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)} type="video/mp4" />
+              Video tag not supported.
+            </video>
+          )}
         </section>
         <section className="flex flex-col gap-[32px] py-6">
-          <h1 className="text-4xl font-kumbh font-bold">{video.title}</h1>
+          <h1 className="text-4xl font-kumbh font-bold">{video && video.title}</h1>
           <p className="max-w-[75ch] font-kumbh">
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Laborum, vero possimus quia fugit natus aliquid atque error
@@ -53,18 +56,18 @@ export default async function Page({
           <div>
             <div className="flex items-center py-1">
               <p className="text-lg opacity-60 w-20 font-kumbh">Studio</p>
-              <p className="text-lg font-kumbh">{video.studio}</p>
+              <p className="text-lg font-kumbh">{video && video.studio}</p>
             </div>
             <div className="flex items-center py-1">
               <p className="text-lg opacity-60 w-20 font-kumbh">Tags</p>
               <p className="text-lg font-kumbh">
-                {video.tags.map((tag: string, index: number) => `${tag}${index !== video.tags.length - 1 ? "," : ""} `)}
+                {video && video.tags.map((tag: string, index: number) => `${tag}${index !== video.tags.length - 1 ? "," : ""} `)}
               </p>
             </div>
           </div>
         </section>
 
-        {video.actors.length > 0 && (
+        {BASE_SERVER_URL && video && video.actors.length > 0 && (
           <section className="flex flex-col gap-[32px] py-6">
             <h2 className="text-2xl font-kumbh font-bold">Cast</h2>
 
@@ -83,7 +86,7 @@ export default async function Page({
         )}
       </main>
 
-      {videos.length > 0 && (
+      {BASE_SERVER_URL && videos.length > 0 && (
         <aside className="pt-12 xl:mt-0 xl:pl-8">
           <h2 className="text-2xl font-kumbh font-bold pb-4">Related Videos</h2>
           <div className="flex flex-col gap-4">

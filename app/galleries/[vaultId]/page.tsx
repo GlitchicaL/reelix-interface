@@ -1,32 +1,32 @@
-import { cookies } from 'next/headers';
+"use client";
+
+import { useParams } from 'next/navigation';
+
+import { useCookie, useFetch } from '@/hooks';
 
 import Navigation from "@/components/Navigation";
 import Card from "@/components/Card";
 
-import { Gallery } from "@/lib/types";
-import { API_PORT, CDN_PORT } from '@/lib/constants';
+import { Actor, Gallery } from "@/lib/types";
+import { CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL } from '@/lib/constants';
 import { buildActorUrl, buildGalleryUrl } from '@/lib/utils';
 
-async function Page({
-  params,
-}: {
-  params: Promise<{ vaultId: number }>
-}) {
-  const BASE_SERVER_URL = (await cookies()).get('reelix_base_server_url')?.value ?? "";
+export default function Page() {
+  const params = useParams();
+  const vaultId = params?.vaultId as string;
 
-  const { vaultId } = await params;
-  const galleriesResponse = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/galleries/${vaultId}`);
-  const galleries: Gallery[] = await galleriesResponse.json();
+  const { value: BASE_SERVER_URL } = useCookie(REELIX_COOKIE_BASE_SERVER_URL);
+  const { data: galleries } = useFetch<Gallery[]>(`/api/galleries/${vaultId}`);
+  const { data } = useFetch<{ actors: Actor[], vaultName: string }>(`/api/actors/${vaultId}`);
 
-  const actorsResponse = await fetch(`${BASE_SERVER_URL}:${API_PORT}/api/actors/${vaultId}`);
-  const { actors, vaultName } = await actorsResponse.json();
+  const { actors, vaultName } = data ?? { actors: [], vaultName: null };
 
   return (
     <main>
       <Navigation vaultId={vaultId} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {actors && actors.length > 0 && (
+        {BASE_SERVER_URL && vaultName && actors && actors.length > 0 && (
           <Card
             href={`/actors/${vaultId}`}
             src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, vaultName, actors[actors.length - 1].slug)}
@@ -36,7 +36,7 @@ async function Page({
           />
         )}
 
-        {galleries && galleries.map((gallery) => (
+        {BASE_SERVER_URL && galleries && galleries.map((gallery) => (
           <Card
             key={gallery.id}
             href={`/gallery/${gallery.id}`}
@@ -50,5 +50,3 @@ async function Page({
     </main>
   );
 }
-
-export default Page;
