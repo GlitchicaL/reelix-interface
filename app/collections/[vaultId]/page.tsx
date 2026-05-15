@@ -28,7 +28,7 @@ export default function Page() {
             <Card
               key={collection.id}
               href={`/videos/${collection.id}`}
-              src={buildCollectionUrl(BASE_SERVER_URL, CDN_PORT, collection.vaultName, collection.name)}
+              src={buildCollectionUrl(BASE_SERVER_URL, CDN_PORT, collection.vaultSlug, collection.slug)}
               alt={collection.name}
               title={collection.name}
               style={"h-102"}

@@ -37,10 +37,10 @@ export default function Page() {
               width="100%"
               height="auto"
               controls
-              poster={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)}
+              poster={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultSlug, video.collectionSlug, video.slug)}
               className="aspect-video object-cover cursor-pointer rounded-3xl"
             >
-              <source src={buildVideoUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)} type="video/mp4" />
+              <source src={buildVideoUrl(BASE_SERVER_URL, CDN_PORT, video.vaultSlug, video.collectionSlug, video.slug)} type="video/mp4" />
               Video tag not supported.
             </video>
           )}
@@ -75,7 +75,7 @@ export default function Page() {
               {video.actors.map((actor: Actor) => (
                 <Picture
                   key={actor.slug}
-                  src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, actor.slug)}
+                  src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, video.vaultSlug, actor.slug)}
                   alt={actor.name}
                   caption={actor.name}
                   style={"max-w-[300px] max-h-[400px]"}
@@ -94,7 +94,7 @@ export default function Page() {
               <Card
                 key={video.id}
                 href={`/video/${video.id}`}
-                src={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)}
+                src={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultSlug, video.collectionSlug, video.slug)}
                 alt={video.title}
                 title={video.title}
               />

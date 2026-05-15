@@ -16,8 +16,8 @@ function Backdrop({ serverUrl, video }: BackdropProps) {
   const [backdrop, setBackdrop] = useState<string | null>(null);
 
   useEffect(() => {
-    const backdropUrl = buildBackdropUrl(serverUrl, CDN_PORT, video.vaultName, video.collectionName, video.slug);
-    const thumbnailUrl = buildThumbnailUrl(serverUrl, CDN_PORT, video.vaultName, video.collectionName, video.slug);
+    const backdropUrl = buildBackdropUrl(serverUrl, CDN_PORT, video.vaultSlug, video.collectionSlug, video.slug);
+    const thumbnailUrl = buildThumbnailUrl(serverUrl, CDN_PORT, video.vaultSlug, video.collectionSlug, video.slug);
 
     // By default we want to use the thumbnail url as the backdrop
     // as there is a chance only the thumbnail is available.
@@ -32,7 +32,7 @@ function Backdrop({ serverUrl, video }: BackdropProps) {
     }
 
     image.src = backdropUrl;
-  }, [serverUrl, video.vaultName, video.collectionName, video.slug, CDN_PORT])
+  }, [serverUrl, video.vaultSlug, video.collectionSlug, video.slug, CDN_PORT])
 
   return (
     <div className="fixed -z-50 inset-0 overflow-hidden">

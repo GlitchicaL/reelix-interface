@@ -22,13 +22,12 @@ export default function Page() {
       <h1 className="text-4xl font-kumbh font-bold text-white py-12">
         {videos && videos[0].collectionName}
       </h1>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {videos && BASE_SERVER_URL && videos.map((video: Video, index: number) => (
           <Card
             key={video.id}
             href={`/video/${video.id}`}
-            src={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultName, video.collectionName, video.slug)}
+            src={buildThumbnailUrl(BASE_SERVER_URL, CDN_PORT, video.vaultSlug, video.collectionSlug, video.slug)}
             alt={video.title}
             title={video.title}
           />

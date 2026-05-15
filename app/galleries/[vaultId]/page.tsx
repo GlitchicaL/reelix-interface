@@ -17,19 +17,19 @@ export default function Page() {
 
   const { value: BASE_SERVER_URL } = useCookie(REELIX_COOKIE_BASE_SERVER_URL);
   const { data: galleries } = useFetch<Gallery[]>(`/api/galleries/${vaultId}`);
-  const { data } = useFetch<{ actors: Actor[], vaultName: string }>(`/api/actors/${vaultId}`);
+  const { data } = useFetch<{ actors: Actor[], vaultSlug: string }>(`/api/actors/${vaultId}`);
 
-  const { actors, vaultName } = data ?? { actors: [], vaultName: null };
+  const { actors, vaultSlug } = data ?? { actors: [], vaultSlug: null };
 
   return (
     <main>
       <Navigation vaultId={vaultId} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {BASE_SERVER_URL && vaultName && actors && actors.length > 0 && (
+        {BASE_SERVER_URL && vaultSlug && actors && actors.length > 0 && (
           <Card
             href={`/actors/${vaultId}`}
-            src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, vaultName, actors[actors.length - 1].slug)}
+            src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, vaultSlug, actors[actors.length - 1].slug)}
             alt={`actor`}
             title={`Actors`}
             style={"h-102"}
@@ -40,7 +40,7 @@ export default function Page() {
           <Card
             key={gallery.id}
             href={`/gallery/${gallery.id}`}
-            src={buildGalleryUrl(BASE_SERVER_URL, CDN_PORT, gallery.vaultName, gallery.slug, gallery.imageCount)}
+            src={buildGalleryUrl(BASE_SERVER_URL, CDN_PORT, gallery.vaultSlug, gallery.slug, gallery.imageCount)}
             alt={gallery.slug}
             title={gallery.title}
             style={"h-102"}

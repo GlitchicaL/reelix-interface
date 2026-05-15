@@ -22,13 +22,12 @@ export default function Page() {
       <h1 className="text-4xl font-kumbh font-bold text-white py-12">
         {gallery && gallery.title}
       </h1>
-
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
 
         {BASE_SERVER_URL && gallery && Array.from({ length: gallery.imageCount }).map((_, index) => (
           <Picture
             key={index}
-            src={buildGalleryUrl(BASE_SERVER_URL, CDN_PORT, gallery.vaultName, gallery.slug, index + 1)}
+            src={buildGalleryUrl(BASE_SERVER_URL, CDN_PORT, gallery.vaultSlug, gallery.slug, index + 1)}
             alt={`${gallery.slug}_${index + 1}.jpg`}
             style={""}
           />

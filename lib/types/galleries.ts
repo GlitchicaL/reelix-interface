@@ -4,5 +4,5 @@ export interface Gallery {
   slug: string,
   imageCount: number,
   vaultId: number,
-  vaultName: string,
+  vaultSlug: string,
 }

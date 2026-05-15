@@ -27,7 +27,7 @@ export default function Home() {
               <Link href={`/collections/${vault.id}`}>
                 <div className="relative">
                   <Image
-                    src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/Vaults/${vault.name}/cover.jpg`}
+                    src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/vaults/${vault.name}/cover.jpg`}
                     alt={vault.name}
                     width={1333}
                     height={2000}
