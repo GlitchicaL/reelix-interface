@@ -14,11 +14,12 @@ export default function Home() {
   return (
     <main>
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-kumbh font-bold text-white py-12">
-          Welcome To Reelix!
+        <h1 className="text-3xl font-kumbh font-bold text-white py-12">
+          Hey Justin!
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
           {vaults && vaults.map((vault: Vault) => (
             <div
               key={vault.id}
@@ -27,7 +28,7 @@ export default function Home() {
               <Link href={`/collections/${vault.id}`}>
                 <div className="relative">
                   <Image
-                    src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/vaults/${vault.name}/cover.jpg`}
+                    src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/vaults/${vault.slug}/cover.jpg`}
                     alt={vault.name}
                     width={1333}
                     height={2000}

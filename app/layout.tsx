@@ -32,6 +32,7 @@ export default function RootLayout({
       >
         <div className="container max-w-screen-xl mx-auto px-4">
           <Header />
+          <hr />
           {children}
           <Footer />
         </div>

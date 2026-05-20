@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import * as motion from "motion/react-client";
 
 import LinkItem from "./LinkItem";
-import { User } from "./icons";
 
 interface NavigationProps {
   vaultId: string,
@@ -25,9 +23,9 @@ function Navigation({ vaultId }: NavigationProps) {
   }, []);
 
   return (
-    <div className="py-12 flex justify-between">
-      <ul className="flex gap-12">
-        <LinkItem text="Home" href="/" isActive={false} />
+    <div className="py-6 flex justify-between">
+      <ul className="flex gap-8">
+        <LinkItem text="Vaults" href="/" isActive={false} />
 
         {URLS.map((url) => {
           const href = `${url.base}/${vaultId}`
@@ -37,16 +35,6 @@ function Navigation({ vaultId }: NavigationProps) {
           )
         })}
       </ul>
-
-      <motion.a
-        href="/preferences"
-        initial={{ scale: 0.80, zIndex: 100 }}
-        whileHover={{ scale: 1, zIndex: 100 }}
-        whileTap={{ scale: 0.80 }}
-        className="cursor-pointer"
-      >
-        <User />
-      </motion.a>
     </div>
   );
 }
