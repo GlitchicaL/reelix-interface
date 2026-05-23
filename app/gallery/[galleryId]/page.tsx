@@ -1,11 +1,10 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import * as motion from "motion/react-client";
 
 import { useCookie, useFetch } from "@/hooks";
 
-import { ArrowLeft, Refresh } from "@/components/icons";
+import SubHeader from "@/components/SubHeader";
 import Picture from "@/components/Picture";
 
 import { Gallery } from "@/lib/types";
@@ -23,36 +22,7 @@ export default function Page() {
 
   return (
     <main>
-      <div className="flex place-items-center justify-between">
-        <div className="flex place-items-center gap-4">
-          {window && window.history.length > 1 && (
-            <motion.button
-              onClick={() => router.back()}
-              initial={{ scale: 0.80, zIndex: 100 }}
-              whileHover={{ scale: 1, zIndex: 100 }}
-              whileTap={{ scale: 0.80 }}
-              className="cursor-pointer"
-            >
-              <ArrowLeft />
-            </motion.button>
-          )}
-
-          <h1 className="text-3xl font-kumbh font-bold text-white py-12">
-            {gallery && gallery.title}
-          </h1>
-        </div>
-
-        <div>
-          <motion.button
-            initial={{ scale: 0.80, zIndex: 100 }}
-            whileHover={{ scale: 1, zIndex: 100 }}
-            whileTap={{ scale: 0.80 }}
-            className="cursor-pointer"
-          >
-            <Refresh />
-          </motion.button>
-        </div>
-      </div>
+      <SubHeader title={gallery ? gallery?.title : ""} onBack={router.back} />
 
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
 

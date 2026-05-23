@@ -1,11 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import * as motion from "motion/react-client";
 
 import { useCookie, useFetch } from "@/hooks";
 
-import { Refresh } from "@/components/icons";
+import SubHeader from "@/components/SubHeader";
 import Navigation from "@/components/Navigation";
 import Card from "@/components/Card";
 
@@ -23,20 +22,7 @@ export default function Page() {
   return (
     <main>
       <div className="max-w-7xl">
-        <div className="flex justify-between place-items-center pt-12">
-          <h1 className="text-3xl font-kumbh font-bold text-white">
-            {collections && collections[0].vaultName}
-          </h1>
-
-          <motion.button
-            initial={{ scale: 0.80, zIndex: 100 }}
-            whileHover={{ scale: 1, zIndex: 100 }}
-            whileTap={{ scale: 0.80 }}
-            className="cursor-pointer"
-          >
-            <Refresh />
-          </motion.button>
-        </div>
+        <SubHeader title={collections ? collections[0]?.vaultName : ""} />
 
         <Navigation vaultId={vaultId} />
 

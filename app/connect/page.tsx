@@ -17,12 +17,11 @@ export default function Page() {
 
     try {
       await setBaseServerURL(serverIP, rememberServer);
+      router.push("/");
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : "An unknown error occured");
       return;
     }
-
-    router.push("/");
   };
 
   return (

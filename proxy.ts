@@ -1,6 +1,13 @@
 import { NextResponse, NextRequest } from "next/server";
 import { trimUrl } from "@/lib/utils";
-import { PROTECTED_ROUTES, API_PORT, REELIX_COOKIE_BASE_SERVER_URL, REELIX_COOKIE_AUTH_TOKEN } from "@/lib/constants";
+
+import {
+  PROTECTED_ROUTES,
+  API_PORT,
+  REELIX_COOKIE_BASE_SERVER_URL,
+  REELIX_COOKIE_REFRESH_TOKEN,
+  REELIX_COOKIE_AUTH_TOKEN
+} from "@/lib/constants";
 
 export async function proxy(request: NextRequest) {
   const BASE_API_URL = request.cookies.get(REELIX_COOKIE_BASE_SERVER_URL)?.value;
@@ -22,9 +29,10 @@ export async function proxy(request: NextRequest) {
   }
 
   const isProtectedRoute = PROTECTED_ROUTES.includes(trimUrl(path));
+  const refreshCookie = request.cookies.get(REELIX_COOKIE_REFRESH_TOKEN)?.value;
   const authCookie = request.cookies.get(REELIX_COOKIE_AUTH_TOKEN)?.value;
 
-  if (isProtectedRoute && !authCookie) {
+  if (isProtectedRoute && !refreshCookie) {
     return NextResponse.redirect(new URL('/login', request.nextUrl));
   }
 }

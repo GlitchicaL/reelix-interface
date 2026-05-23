@@ -13,6 +13,8 @@ export default function Page() {
   async function loginHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    if (username === "" || password === "") return;
+
     try {
       const res = await fetch("/api/login", {
         method: "POST",
@@ -20,12 +22,12 @@ export default function Page() {
         body: JSON.stringify({ username, password }),
         credentials: "include",
       });
+
+      if (res.ok) router.push("/");
     } catch (error) {
       console.log(error);
       return;
     }
-
-    router.push("/");
   };
 
   return (
@@ -80,6 +82,10 @@ export default function Page() {
           Login
         </button>
       </form>
+
+      <a href="/register" className="text-sm opacity-50 hover:opacity-100 transition">
+        Don't have an account? Sign up!
+      </a>
     </main>
   );
 }
