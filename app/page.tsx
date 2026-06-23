@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useCookie, useFetch } from "@/hooks";
 import { Vault } from "@/lib/types";
 import { CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL } from "@/lib/constants";
+import { buildVaultUrl } from "@/lib/utils";
 
 export default function Home() {
   const { value: BASE_SERVER_URL } = useCookie(REELIX_COOKIE_BASE_SERVER_URL);
@@ -20,7 +21,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-          {vaults && vaults.map((vault: Vault) => (
+          {vaults && BASE_SERVER_URL && vaults.map((vault: Vault) => (
             <div
               key={vault.id}
               className="bg-card-500 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow justify-items-center"
@@ -28,7 +29,7 @@ export default function Home() {
               <Link href={`/collections/${vault.id}`}>
                 <div className="relative">
                   <Image
-                    src={`${BASE_SERVER_URL}:${CDN_PORT}/cdn/vaults/${vault.slug}/cover.jpg`}
+                    src={buildVaultUrl(BASE_SERVER_URL, CDN_PORT, vault.slug)}
                     alt={vault.name}
                     width={1333}
                     height={2000}

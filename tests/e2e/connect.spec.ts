@@ -15,7 +15,7 @@ test.describe("Connect Page", () => {
 
   test('should fill server ip', async () => {
     await connectPage.fillServerIp();
-    await expect(connectPage.serverIpInput).toHaveValue("localhost");
+    await expect(connectPage.serverIpInput).toHaveValue("localhost:8082");
   });
 
   test('should check remember server', async () => {

@@ -24,7 +24,7 @@ export function buildBaseApiServerUrl(
   serverPort: number,
   basePath: string
 ): string {
-  return `${serverUrl}:${serverPort}/${basePath}`;
+  return `http://${serverUrl}:${serverPort}/${basePath}`;
 }
 
 export function buildCdnPath(
@@ -32,7 +32,15 @@ export function buildCdnPath(
   serverPort: number,
   basePath: string
 ): string {
-  return `${serverUrl}:${serverPort}/${basePath}`;
+  return `http://${serverUrl}:${serverPort}/${basePath}`;
+}
+
+export function buildVaultUrl(
+  serverUrl: string,
+  serverPort: number,
+  vaultSlug: string,
+): string {
+  return buildCdnPath(serverUrl, serverPort, `${BASE_CDN_PATH}/${vaultSlug}/cover.jpg`);
 }
 
 export function buildCollectionUrl(

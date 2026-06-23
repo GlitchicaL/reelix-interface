@@ -21,7 +21,7 @@ export class ConnectPage {
     await this.page.goto('/connect');
   }
 
-  async fillServerIp(ip: string = "localhost") {
+  async fillServerIp(ip: string = "localhost:8082") {
     await this.serverIpInput.fill(ip);
   }
 
@@ -29,7 +29,7 @@ export class ConnectPage {
     await this.rememberServerCheckbox.click();
   }
 
-  async submitForm(ip: string = "localhost", remember: boolean = false) {
+  async submitForm(ip: string = "localhost:8082", remember: boolean = false) {
     await this.fillServerIp(ip);
 
     if (remember) await this.checkRememberServer();

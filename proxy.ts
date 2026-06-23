@@ -3,14 +3,15 @@ import { trimUrl } from "@/lib/utils";
 
 import {
   PROTECTED_ROUTES,
-  API_PORT,
   REELIX_COOKIE_BASE_SERVER_URL,
+  REELIX_COOKIE_API_PORT,
   REELIX_COOKIE_REFRESH_TOKEN,
   REELIX_COOKIE_AUTH_TOKEN
 } from "@/lib/constants";
 
 export async function proxy(request: NextRequest) {
   const BASE_API_URL = request.cookies.get(REELIX_COOKIE_BASE_SERVER_URL)?.value;
+  const API_PORT = request.cookies.get(REELIX_COOKIE_API_PORT)?.value;
 
   if (!BASE_API_URL) {
     return NextResponse.redirect(new URL('/connect', request.url));
@@ -24,7 +25,7 @@ export async function proxy(request: NextRequest) {
   // through cookies, thus it is done through here. 
 
   if (path.startsWith("/api/")) {
-    const url = `${BASE_API_URL}:${API_PORT}${path}`;
+    const url = `http://${BASE_API_URL}:${API_PORT}${path}`;
     return NextResponse.rewrite(new URL(url));
   }
 
