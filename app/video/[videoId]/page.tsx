@@ -10,8 +10,8 @@ import Picture from "@/components/Picture";
 import Card from "@/components/Card";
 import Backdrop from "@/components/Backdrop";
 
-import { Video, Actor, VideoQualityPreset, VIDEO_QUALITY_OPTIONS } from "@/lib/types";
-import { CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL } from "@/lib/constants";
+import { Video, Actor, VideoQualityPreset } from "@/lib/types";
+import { CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL, VIDEO_QUALITY_OPTIONS } from "@/lib/constants";
 import { buildThumbnailUrl, buildActorUrl, buildVideoUrl, buildHlsPlaylistUrl } from "@/lib/utils";
 
 export default function Page() {
@@ -112,7 +112,7 @@ export default function Page() {
                 id="quality-select-main"
                 value={selectedQuality}
                 onChange={(e) => handleQualityChange(e.target.value as VideoQualityPreset)}
-                className="font-kumbh p-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+                className="font-kumbh p-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-midnight"
                 disabled={isLoading}
               >
                 {VIDEO_QUALITY_OPTIONS.map((option) => (
