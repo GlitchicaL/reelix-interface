@@ -2,24 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 import Hls, { Level } from "hls.js";
-import { VideoQualityOption, VideoQualityPreset } from "@/lib/types";
+import { VideoQualityPreset } from "@/lib/types";
 
 interface HlsPlayerProps {
   playlistUrl: string;
   posterUrl: string;
   onHlsError: () => void;
-  availableQualityOptions: VideoQualityOption[];
-  selectedQuality: VideoQualityPreset | "direct";
-  onQualityChange: (preset: VideoQualityPreset) => void;
+  selectedQuality: VideoQualityPreset;
 }
 
 export default function HlsPlayer({
   playlistUrl,
   posterUrl,
   onHlsError,
-  availableQualityOptions,
   selectedQuality,
-  onQualityChange,
 }: HlsPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const hlsRef = useRef<Hls | null>(null);
@@ -65,7 +61,7 @@ export default function HlsPlayer({
   }, [playlistUrl, onHlsError]);
 
   useEffect(() => {
-    if (selectedQuality === "direct" || !hlsRef.current || qualityLevels.length === 0) {
+    if (!hlsRef.current || qualityLevels.length === 0) {
       return;
     }
 
@@ -74,35 +70,14 @@ export default function HlsPlayer({
   }, [selectedQuality, qualityLevels]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <video
-        ref={videoRef}
-        width="100%"
-        height="auto"
-        controls
-        poster={posterUrl}
-        className="aspect-video object-cover cursor-pointer rounded-3xl"
-      />
-      
-      <div className="flex items-center gap-4">
-        <label htmlFor="quality-select" className="font-kumbh text-lg">
-          Quality:
-        </label>
-        <select
-          id="quality-select"
-          value={selectedQuality}
-          onChange={(e) => onQualityChange(e.target.value as VideoQualityPreset)}
-          className="font-kumbh p-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
-          disabled={!playlistUrl}
-        >
-          {availableQualityOptions.map((option) => (
-            <option key={option.preset} value={option.preset}>
-              {option.label} ({option.resolution} - {option.bitrate})
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
+    <video
+      ref={videoRef}
+      width="100%"
+      height="auto"
+      controls
+      poster={posterUrl}
+      className="aspect-video object-cover cursor-pointer rounded-3xl"
+    />
   );
 }
 

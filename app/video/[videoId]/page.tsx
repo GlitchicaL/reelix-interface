@@ -97,9 +97,7 @@ export default function Page() {
                   playlistUrl={hlsPlaylistFullUrl}
                   posterUrl={posterUrl}
                   onHlsError={handleHlsError}
-                  availableQualityOptions={VIDEO_QUALITY_OPTIONS}
                   selectedQuality={selectedQuality}
-                  onQualityChange={handleQualityChange}
                 />
               )}
             </div>
