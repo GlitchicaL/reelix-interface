@@ -101,3 +101,19 @@ export function buildVideoUrl(
 ): string {
   return buildCdnPath(serverUrl, serverPort, `${BASE_CDN_PATH}/${vaultName}/collections/${collectionName}/${videoSlug}/${videoSlug}.mp4`);
 }
+
+export function buildVideoStreamApiUrl(
+  serverUrl: string,
+  serverPort: number,
+  videoId: string
+): string {
+  return `/api/video/${videoId}/stream`;
+}
+
+export function buildHlsPlaylistUrl(
+  serverUrl: string,
+  serverPort: number,
+  playlistPath: string
+): string {
+  return `http://${serverUrl}:${serverPort}${playlistPath}`;
+}
