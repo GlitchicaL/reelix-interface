@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useCookie, useFetch } from "@/hooks";
+
+import SubHeader from "@/components/SubHeader";
+
 import { Vault } from "@/lib/types";
 import { CDN_PORT, REELIX_COOKIE_BASE_SERVER_URL } from "@/lib/constants";
 import { buildVaultUrl } from "@/lib/utils";
@@ -15,11 +18,9 @@ export default function Home() {
   return (
     <main>
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-kumbh font-bold text-white py-12">
-          Hey Justin!
-        </h1>
+        <SubHeader title="Hey Justin!" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pt-4">
 
           {vaults && BASE_SERVER_URL && vaults.map((vault: Vault) => (
             <div

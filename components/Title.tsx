@@ -4,7 +4,7 @@ interface TitleProps {
 
 function Title({ text }: TitleProps) {
   return (
-    <h1 className="text-3xl font-kumbh font-bold text-white">
+    <h1 className="text-2xl font-carter text-white">
       {text}
     </h1>
   );

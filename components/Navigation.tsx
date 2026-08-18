@@ -23,7 +23,7 @@ function Navigation({ vaultId }: NavigationProps) {
   }, []);
 
   return (
-    <div className="py-6 flex justify-between">
+    <div className="pb-4 flex justify-between">
       <ul className="flex gap-8">
         <LinkItem text="Vaults" href="/" isActive={false} />
 

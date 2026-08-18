@@ -23,7 +23,7 @@ export default function Page() {
     <main>
       <SubHeader title={videos ? `${videos[0].vaultName} - ${videos[0].collectionName}` : ""} onBack={router.back} />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
         {videos && BASE_SERVER_URL && videos.map((video: Video, index: number) => (
           <Card
             key={video.id}

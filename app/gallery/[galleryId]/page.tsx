@@ -24,7 +24,7 @@ export default function Page() {
     <main>
       <SubHeader title={gallery ? gallery?.title : ""} onBack={router.back} />
 
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4 pt-4">
 
         {BASE_SERVER_URL && gallery && Array.from({ length: gallery.imageCount }).map((_, index) => (
           <Picture

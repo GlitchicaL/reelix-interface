@@ -9,8 +9,8 @@ interface SubHeaderProps {
 
 function SubHeader({ title = "", onBack }: SubHeaderProps) {
   return (
-    <div className="flex place-items-center justify-between">
-      <div className="flex place-items-center gap-4 py-12">
+    <div className="flex place-items-center justify-between pt-4">
+      <div className="flex place-items-center gap-2">
         {onBack && window && window.history.length > 1 && (
           <Back action={onBack} />
         )}
