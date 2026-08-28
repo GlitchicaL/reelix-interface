@@ -34,7 +34,7 @@ jobs:
       working-directory: backend
       run: |
         docker compose \
-          -f docker-compose.test.yml \
+          -f compose.test.yml \
           up -d
 
     - name: Wait For API
@@ -64,10 +64,10 @@ jobs:
       if: failure()
       working-directory: backend
       run: |
-        docker compose -f docker-compose.test.yml logs
+        docker compose -f compose.test.yml logs
 
     - name: Stop Backend Services
       if: always()
       working-directory: backend
       run: |
-        docker compose -f docker-compose.test.yml down -v
+        docker compose -f compose.test.yml down -v
