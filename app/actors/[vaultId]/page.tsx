@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
 import { useCookie, useFetch } from "@/hooks";
@@ -29,14 +30,16 @@ export default function Page() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {BASE_SERVER_URL && vault && actors && actors.map((actor: Actor) => (
-          <Picture
-            key={actor.slug}
-            src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, vault.slug, actor.slug)}
-            alt={actor.name}
-            caption={actor.name}
-            width={300}
-            height={450}
-          />
+          <Link href={`/actor/${actor.id}`} key={actor.slug}>
+            <Picture
+              src={buildActorUrl(BASE_SERVER_URL, CDN_PORT, vault.slug, actor.slug)}
+              alt={actor.name}
+              caption={actor.name}
+              allowPopup={false}
+              width={300}
+              height={450}
+            />
+          </Link>
         ))}
       </div>
     </main >

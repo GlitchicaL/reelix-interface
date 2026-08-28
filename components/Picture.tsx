@@ -8,12 +8,13 @@ interface PictureProps {
   src: string,
   alt: string,
   caption?: string | null,
+  allowPopup?: boolean,
   width?: number,
   height?: number,
   style?: string,
 }
 
-function Picture({ src, alt, caption = null, width = 1333, height = 2000, style = "h-102" }: PictureProps) {
+function Picture({ src, alt, caption = null, allowPopup = true, width = 1333, height = 2000, style = "h-102" }: PictureProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -29,7 +30,7 @@ function Picture({ src, alt, caption = null, width = 1333, height = 2000, style 
             type: "spring",
             stiffness: 200,
           }}
-          onClick={() => setIsOpen(true)}
+          onClick={allowPopup ? () => setIsOpen(true) : () => {}}
         >
           <Image
             src={src}
