@@ -1,3 +1,5 @@
+import { Collection } from "./collection";
+
 export interface Video {
   id: number,
   title: string,
@@ -12,6 +14,8 @@ export interface Video {
 }
 
 export interface Actor {
+  id: number,
   name: string,
   slug: string,
+  collections: Collection[],
 }
